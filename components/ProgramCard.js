@@ -1,12 +1,9 @@
 import Link from "next/link";
-import { CATEGORY_THEME } from "@/lib/constants";
 import { getMakerNames, hasOpenUrl } from "@/lib/format";
 import CategoryLabel from "./CategoryLabel";
 import LikeButton from "./LikeButton";
-import ProgramThumbnail from "./ProgramThumbnail";
 
 export default function ProgramCard({ program, makersById, compact = false, likeAccess = "guest", liked = false }) {
-  const theme = CATEGORY_THEME[program.category] || CATEGORY_THEME["학교업무"];
   const makerNames = getMakerNames(program.makerIds, makersById) || "제작자 미정";
   const likes = Number.isFinite(program.likes) ? program.likes : 0;
   const tags = (program.tags || []).slice(0, compact ? 2 : 3);
@@ -14,21 +11,17 @@ export default function ProgramCard({ program, makersById, compact = false, like
   return (
     <article className={`program-card${compact ? " program-card--compact" : ""}`}>
       <Link className="card-link" href={`/programs/${program.id}`} aria-label={`${program.title} 상세 보기`}>
-        <div
-          className="program-card__thumb"
-          style={{ "--thumb-from": theme.from, "--thumb-to": theme.to }}
-        >
-          <ProgramThumbnail program={program} />
-        </div>
         <div className="program-card__body">
           <CategoryLabel category={program.category} unit={program.unit} />
           <h3>{program.title}</h3>
-          <p className="program-card__subtitle">{program.subtitle || ""}</p>
-          <ul className="tag-list">
-            {tags.map((tag) => (
-              <li key={tag}>{tag}</li>
-            ))}
-          </ul>
+          {program.subtitle ? <p className="program-card__subtitle">{program.subtitle}</p> : null}
+          {tags.length ? (
+            <ul className="tag-list">
+              {tags.map((tag) => (
+                <li key={tag}>{tag}</li>
+              ))}
+            </ul>
+          ) : null}
         </div>
       </Link>
       <div className="program-card__footer">
