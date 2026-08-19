@@ -14,8 +14,8 @@ export default function IdeaCard({ idea, makersById, canEdit = false, canDelete 
           {idea.category}
         </span>
       </div>
-      <h3 className="line-clamp-2">{idea.title}</h3>
-      <p className="idea-card__description line-clamp-3">{idea.description}</p>
+      <h3>{idea.title}</h3>
+      <p className="idea-card__description">{idea.description}</p>
       {idea.status === "completed" && idea.programId ? (
         <p className="idea-card__link">
           <Link href={`/programs/${idea.programId}`}>완성된 프로그램 보기</Link>

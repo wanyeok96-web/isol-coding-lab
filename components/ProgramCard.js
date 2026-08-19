@@ -22,8 +22,8 @@ export default function ProgramCard({ program, makersById, compact = false, like
         </div>
         <div className="program-card__body">
           <CategoryLabel category={program.category} unit={program.unit} />
-          <h3 className="line-clamp-2">{program.title}</h3>
-          <p className="program-card__subtitle line-clamp-2">{program.subtitle || ""}</p>
+          <h3>{program.title}</h3>
+          <p className="program-card__subtitle">{program.subtitle || ""}</p>
           <ul className="tag-list">
             {tags.map((tag) => (
               <li key={tag}>{tag}</li>

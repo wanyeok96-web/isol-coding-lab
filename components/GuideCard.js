@@ -20,6 +20,17 @@ export default function GuideCard({ guide }) {
 
         {guide.copyPrompt ? <CopyPromptButton text={guide.copyPrompt} /> : null}
 
+        {guide.files?.length ? (
+          <ul className="guide-files">
+            {guide.files.map((file) => (
+              <li key={file.name}>
+                <strong>{file.name}</strong>
+                <span>{file.text}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
         {guide.points?.length ? (
           <ol className="guide-points">
             {guide.points.map((point) => (
