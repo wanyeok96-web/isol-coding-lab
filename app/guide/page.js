@@ -3,7 +3,7 @@ import GuideCard from "../../components/GuideCard";
 import { getGuides } from "../../lib/data";
 
 export const metadata = {
-  title: "바이브 가이드 | ISOL CODING LAB",
+  title: "가이드 | ISOL CODING LAB",
   description: "아이디어만 있으면 나만의 도구를 만들고, 깃허브 링크로 나눠 쓰는 기초 순서를 안내합니다.",
 };
 

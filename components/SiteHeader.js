@@ -9,7 +9,7 @@ const NAV_ITEMS = [
   { key: "programs", href: "/", label: "프로그램" },
   { key: "makers", href: "/makers", label: "가입자" },
   { key: "ideas", href: "/ideas", label: "아이디어" },
-  { key: "guide", href: "/guide", label: "바이브 가이드" },
+  { key: "guide", href: "/guide", label: "가이드" },
 ];
 
 function getActiveKey(pathname) {

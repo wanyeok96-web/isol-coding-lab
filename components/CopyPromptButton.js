@@ -33,15 +33,15 @@ export default function CopyPromptButton({ text }) {
   return (
     <>
       <button className="btn btn--primary guide-copy-btn" type="button" onClick={() => setOpen(true)}>
-        처음 넣을 글 복사하기
+        처음 넣을 프롬프트 복사하기
       </button>
       <GuideModal
         open={open}
-        title="처음 넣을 글"
+        title="처음 넣을 프롬프트"
         onClose={() => setOpen(false)}
         footer={
           <button className="btn btn--primary" type="button" onClick={handleCopy}>
-            {copied ? "복사되었습니다" : "이 글 복사하기"}
+            {copied ? "복사되었습니다" : "이 프롬프트 복사하기"}
           </button>
         }
       >
