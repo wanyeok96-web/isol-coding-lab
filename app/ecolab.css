@@ -1820,6 +1820,34 @@ p {
   color: var(--color-text-secondary);
 }
 
+.guide-level-tag {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0 12px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 113, 227, 0.12);
+  color: #0071e3;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.guide-copy-btn {
+  margin-top: 16px;
+}
+
+.github-guide {
+  margin-top: 18px;
+}
+
+.github-guide__steps {
+  margin-top: 14px;
+  padding: 16px 16px 16px 2em;
+  border-radius: 16px;
+  background: rgba(0, 113, 227, 0.06);
+}
+
 .guide-path {
   display: flex;
   flex-wrap: wrap;
@@ -1878,6 +1906,14 @@ p {
   color: #fff;
   font-size: 1.2rem;
   font-weight: 700;
+}
+
+.guide-chapter--basic .guide-chapter__index {
+  background: linear-gradient(180deg, #5ac8fa, #007aff);
+}
+
+.guide-chapter--basic .guide-card__subtitle {
+  color: #0071e3;
 }
 
 .guide-chapter__body h2 {

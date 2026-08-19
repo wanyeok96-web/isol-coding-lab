@@ -4,11 +4,11 @@ import { getGuides } from "../../lib/data";
 
 export const metadata = {
   title: "바이브 가이드 | ISOL CODING LAB",
-  description: "바이브코딩이 무엇인지부터, 도구로 만들고 GitHub에 올리기까지 순서대로 안내합니다.",
+  description: "아이디어만 있으면 나만의 도구를 만들고, 깃허브 링크로 나눠 쓰는 기초 순서를 안내합니다.",
 };
 
 export default async function GuidePage() {
-  const guides = await getGuides();
+  const guides = (await getGuides()).filter((guide) => guide.level !== "advanced");
 
   return (
     <main id="main" className="page-shell">
@@ -16,27 +16,22 @@ export default async function GuidePage() {
         <div className="container guide-hero__inner">
           <div>
             <p className="hero-eyebrow">ISOL CODING LAB · 이코랩</p>
+            <p className="guide-level-tag">기초</p>
             <h1>
-              바이브코딩,
+              아이디어만 있으면
               <br />
-              이 순서면 시작할 수 있습니다.
+              나만의 도구를 만들 수 있습니다.
             </h1>
             <p className="page-lead">
-              코드를 몰라도 됩니다. 불편함을 말로 설명하고, 도구로 만들고, GitHub에 올리면 학교 도구가 됩니다.
+              컴퓨터 언어를 몰라도 됩니다. 대화로 설계하고, 폴더에서 만들고, 깃허브 링크로 나눠 보세요.
             </p>
-            <ol className="guide-path" aria-label="바이브코딩 순서">
-              <li>
-                <span>01</span>
-                이해하기
-              </li>
-              <li>
-                <span>02</span>
-                도구로 만들기
-              </li>
-              <li>
-                <span>03</span>
-                GitHub에 올리기
-              </li>
+            <ol className="guide-path" aria-label="기초 순서">
+              {guides.map((guide) => (
+                <li key={guide.id}>
+                  <span>{String(guide.order).padStart(2, "0")}</span>
+                  {guide.title}
+                </li>
+              ))}
             </ol>
           </div>
           <div className="guide-hero__panel">

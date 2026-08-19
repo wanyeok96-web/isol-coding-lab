@@ -1,23 +1,24 @@
-import { GUIDE_ICON_META } from "@/lib/constants";
+import CopyPromptButton from "./CopyPromptButton";
+import GithubGuidePanel from "./GithubGuidePanel";
 
 export default function GuideCard({ guide }) {
-  const icon = GUIDE_ICON_META[guide.id] || String(guide.order).padStart(2, "0");
-  const paragraphs = String(guide.description || "")
-    .split("\n")
-    .map((item) => item.trim())
-    .filter(Boolean);
+  const icon = String(guide.order).padStart(2, "0");
+  const paragraphs = guide.paragraphs || (guide.description ? [guide.description] : []);
 
   return (
-    <article className="guide-chapter" id={guide.id}>
+    <article className="guide-chapter guide-chapter--basic" id={guide.id}>
       <div className="guide-chapter__index">{icon}</div>
       <div className="guide-chapter__body">
+        <p className="guide-level-tag">기초</p>
         <h2>{guide.title}</h2>
-        <p className="guide-card__subtitle">{guide.subtitle}</p>
+        {guide.subtitle ? <p className="guide-card__subtitle">{guide.subtitle}</p> : null}
         {paragraphs.map((paragraph) => (
           <p key={paragraph} className="guide-card__description">
             {paragraph}
           </p>
         ))}
+
+        {guide.copyPrompt ? <CopyPromptButton text={guide.copyPrompt} /> : null}
 
         {guide.points?.length ? (
           <ol className="guide-points">
@@ -27,20 +28,7 @@ export default function GuideCard({ guide }) {
           </ol>
         ) : null}
 
-        {guide.tools?.length ? (
-          <div className="guide-tool-grid">
-            {guide.tools.map((tool) => (
-              <article className="guide-tool" key={tool.id}>
-                <h3>{tool.name}</h3>
-                <p className="guide-tool__subtitle">{tool.subtitle}</p>
-                <p>{tool.description}</p>
-                {tool.howto ? <p className="guide-tool__howto">{tool.howto}</p> : null}
-              </article>
-            ))}
-          </div>
-        ) : null}
-
-        {guide.note ? <p className="guide-note">{guide.note}</p> : null}
+        {guide.githubSteps?.length ? <GithubGuidePanel steps={guide.githubSteps} /> : null}
       </div>
     </article>
   );
