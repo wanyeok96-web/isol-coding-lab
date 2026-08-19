@@ -1,16 +1,24 @@
 import { createServerSupabase } from "../../lib/supabase-server";
-import { getCurrentMember, isAdminMember } from "../../lib/staff";
-import { approveStaff } from "./actions";
+import { getCurrentMember, isAdminMember, normalizeEmail } from "../../lib/staff";
+import StaffMemberRow from "../../components/StaffMemberRow";
 
 export const metadata = {
   title: "가입 승인 | ISOL CODING LAB",
   description: "이코랩 교직원 가입 요청을 승인합니다.",
 };
 
+function displayName(email, makersByEmail) {
+  const key = normalizeEmail(email);
+  const fromMaker = makersByEmail.get(key);
+  if (fromMaker) return fromMaker;
+  return String(email || "").split("@")[0] || "이름 없음";
+}
+
 export default async function AdminPage() {
   const supabase = await createServerSupabase();
   const { data } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
   const member = await getCurrentMember(supabase, data.user?.email);
+  const currentEmail = normalizeEmail(data.user?.email);
 
   if (!isAdminMember(member)) {
     return (
@@ -28,13 +36,20 @@ export default async function AdminPage() {
     );
   }
 
-  const { data: members } = await supabase
-    .from("staff_members")
-    .select("email, role, status, created_at")
-    .order("created_at", { ascending: false });
+  const [{ data: members }, { data: makers }] = await Promise.all([
+    supabase.from("staff_members").select("email, role, status, created_at").order("created_at", { ascending: false }),
+    supabase.from("makers").select("email, name"),
+  ]);
+
+  const makersByEmail = new Map(
+    (makers || [])
+      .filter((row) => row.email && row.name)
+      .map((row) => [normalizeEmail(row.email), String(row.name).trim()])
+  );
 
   const pending = (members || []).filter((row) => row.status === "pending");
   const approved = (members || []).filter((row) => row.status === "approved");
+  const adminCount = approved.filter((row) => row.role === "admin").length;
 
   return (
     <main id="main" className="page-shell">
@@ -55,15 +70,13 @@ export default async function AdminPage() {
             {pending.length ? (
               <ul className="staff-list">
                 {pending.map((row) => (
-                  <li className="staff-list__item" key={row.email}>
-                    <span>{row.email}</span>
-                    <form action={approveStaff}>
-                      <input type="hidden" name="email" value={row.email} />
-                      <button className="btn btn--primary" type="submit">
-                        승인
-                      </button>
-                    </form>
-                  </li>
+                  <StaffMemberRow
+                    key={row.email}
+                    email={row.email}
+                    name={displayName(row.email, makersByEmail)}
+                    canApprove
+                    canDelete
+                  />
                 ))}
               </ul>
             ) : (
@@ -74,12 +87,19 @@ export default async function AdminPage() {
           <article className="surface-card">
             <h2>교직원 {approved.length}명</h2>
             <ul className="staff-list">
-              {approved.map((row) => (
-                <li className="staff-list__item" key={row.email}>
-                  <span>{row.email}</span>
-                  <span className="staff-role">{row.role === "admin" ? "관리자" : "교직원"}</span>
-                </li>
-              ))}
+              {approved.map((row) => {
+                const isSelf = normalizeEmail(row.email) === currentEmail;
+                const isLastAdmin = row.role === "admin" && adminCount <= 1;
+                return (
+                  <StaffMemberRow
+                    key={row.email}
+                    email={row.email}
+                    name={displayName(row.email, makersByEmail)}
+                    role={row.role}
+                    canDelete={!isSelf && !isLastAdmin}
+                  />
+                );
+              })}
             </ul>
           </article>
         </div>
