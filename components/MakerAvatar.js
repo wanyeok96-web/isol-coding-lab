@@ -11,7 +11,7 @@ export default function MakerAvatar({ maker, large = false }) {
 
   return (
     <div className={`avatar-fallback${sizeClass}`}>
-      <span>{maker.name.slice(0, 1)}</span>
+      <span>{maker.name?.slice(0, 1) || "?"}</span>
     </div>
   );
 }

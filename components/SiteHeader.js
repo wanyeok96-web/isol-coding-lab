@@ -7,7 +7,7 @@ import AuthButtons from "./AuthButtons";
 
 const NAV_ITEMS = [
   { key: "programs", href: "/", label: "프로그램" },
-  { key: "makers", href: "/makers", label: "제작자" },
+  { key: "makers", href: "/makers", label: "가입자" },
   { key: "ideas", href: "/ideas", label: "아이디어" },
   { key: "guide", href: "/guide", label: "바이브 가이드" },
 ];

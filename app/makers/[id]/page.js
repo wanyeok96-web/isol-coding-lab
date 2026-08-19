@@ -11,7 +11,7 @@ export async function generateMetadata({ params }) {
   const maker = await getMakerById(id);
 
   if (!maker) {
-    return { title: "제작자 | ISOL CODING LAB" };
+    return { title: "가입자 | ISOL CODING LAB" };
   }
 
   return {
@@ -34,7 +34,7 @@ export default async function MakerPage({ params }) {
           {maker ? (
             <>
               <nav className="breadcrumb" aria-label="경로">
-                <Link href="/makers">제작자</Link>
+                <Link href="/makers">가입자</Link>
                 <span>/</span>
                 <span>{maker.name}</span>
               </nav>
@@ -44,13 +44,10 @@ export default async function MakerPage({ params }) {
                   <MakerAvatar maker={maker} large />
                 </div>
                 <div className="maker-hero__copy">
-                  <p className="hero-eyebrow">ISOL CODING LAB · 제작자</p>
+                  <p className="hero-eyebrow">ISOL CODING LAB · 가입자</p>
                   <h1>{maker.name}</h1>
                   <p className="maker-hero__subject">{maker.subject || "이솔고등학교 교직원"}</p>
                   <p className="maker-hero__count">{makerPrograms.length}개의 프로그램</p>
-                  <p className="page-lead">
-                    {maker.bio || "이솔고등학교에서 수업과 업무 도구를 만들고 있습니다."}
-                  </p>
                 </div>
               </section>
 
@@ -84,10 +81,10 @@ export default async function MakerPage({ params }) {
               </section>
             </>
           ) : (
-            <ErrorState title="제작자를 찾을 수 없어요." description="삭제되었거나 잘못된 주소일 수 있습니다.">
+            <ErrorState title="가입자를 찾을 수 없어요." description="삭제되었거나 잘못된 주소일 수 있습니다.">
               <div className="form-actions">
                 <Link className="btn btn--primary" href="/makers">
-                  제작자 목록으로
+                  가입자 목록으로
                 </Link>
               </div>
             </ErrorState>
