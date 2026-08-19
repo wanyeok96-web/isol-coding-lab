@@ -30,7 +30,7 @@ export default async function MakersPage() {
             ) : (
               <EmptyState
                 title="아직 등록된 제작자가 없어요."
-                description="프로그램을 등록하면 제작자가 여기에 나타납니다."
+                description="교직원으로 인증하면 이름이 여기에 나타납니다."
               />
             )}
           </div>

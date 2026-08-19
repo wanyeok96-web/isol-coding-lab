@@ -14,7 +14,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const { userEmail, staffStatus, isAdmin } = await getAuthState();
+  const { userEmail, userName, staffStatus, isAdmin } = await getAuthState();
 
   return (
     <html lang="ko">
@@ -27,7 +27,7 @@ export default async function RootLayout({ children }) {
         <a className="skip-link" href="#main">
           본문으로 건너뛰기
         </a>
-        <SiteHeader userEmail={userEmail} staffStatus={staffStatus} isAdmin={isAdmin} />
+        <SiteHeader userEmail={userEmail} userName={userName} staffStatus={staffStatus} isAdmin={isAdmin} />
         {children}
         <SiteFooter />
       </body>

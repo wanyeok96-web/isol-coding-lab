@@ -46,16 +46,22 @@ export default async function MakerPage({ params }) {
                 <div className="maker-hero__copy">
                   <p className="hero-eyebrow">ISOL CODING LAB · 제작자</p>
                   <h1>{maker.name}</h1>
-                  <p className="maker-hero__subject">{maker.subject}</p>
+                  <p className="maker-hero__subject">{maker.subject || "이솔고등학교 교직원"}</p>
                   <p className="maker-hero__count">{makerPrograms.length}개의 프로그램</p>
-                  <p className="page-lead">{maker.bio}</p>
+                  <p className="page-lead">
+                    {maker.bio || "이솔고등학교에서 수업과 업무 도구를 만들고 있습니다."}
+                  </p>
                 </div>
               </section>
 
               <section className="page-section page-section--detail">
                 <div className="section-heading">
                   <h2>{makerPrograms.length}개의 프로그램을 만들었습니다.</h2>
-                  <p>개인 제작과 공동 제작 프로그램을 모두 포함해 보여줍니다.</p>
+                  <p>
+                    {makerPrograms.length
+                      ? "개인 제작과 공동 제작 프로그램을 모두 포함해 보여줍니다."
+                      : "프로그램이 등록되면 이 선생님의 작업이 여기에 모입니다."}
+                  </p>
                 </div>
                 <div className="program-grid program-grid--detail">
                   {makerPrograms.length ? (
@@ -71,7 +77,7 @@ export default async function MakerPage({ params }) {
                   ) : (
                     <EmptyState
                       title="아직 공개된 프로그램이 없어요."
-                      description="다음 업데이트에서 더 많은 작업을 소개할 예정입니다."
+                      description="아직 등록한 프로그램이 없어도, 이 선생님은 이코랩 교직원입니다."
                     />
                   )}
                 </div>

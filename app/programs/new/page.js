@@ -7,9 +7,9 @@ export const metadata = {
 };
 
 export default async function NewProgramPage() {
-  const { likeAccess, userEmail } = await getLikeContext();
+  const { likeAccess, userName } = await getLikeContext();
   const canWrite = likeAccess === "staff";
-  const defaultMakerName = String(userEmail || "").split("@")[0];
+  const defaultMakerName = userName || "";
 
   return (
     <main id="main" className="page-shell">

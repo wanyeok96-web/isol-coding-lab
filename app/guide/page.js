@@ -3,8 +3,8 @@ import GuideCard from "../../components/GuideCard";
 import { getGuides } from "../../lib/data";
 
 export const metadata = {
-  title: "Vibe Guide | ISOL CODING LAB",
-  description: "코드를 몰라도 AI와 함께 학교에 필요한 도구를 만들어볼 수 있습니다.",
+  title: "바이브 가이드 | ISOL CODING LAB",
+  description: "바이브코딩이 무엇인지부터, 도구로 만들고 GitHub에 올리기까지 순서대로 안내합니다.",
 };
 
 export default async function GuidePage() {
@@ -17,14 +17,30 @@ export default async function GuidePage() {
           <div>
             <p className="hero-eyebrow">ISOL CODING LAB · 이코랩</p>
             <h1>
-              처음이어도 괜찮아요.
+              바이브코딩,
               <br />
-              아이디어부터 시작해보세요.
+              이 순서면 시작할 수 있습니다.
             </h1>
-            <p className="page-lead">코드를 몰라도 AI와 함께 학교에 필요한 도구를 만들어볼 수 있습니다.</p>
+            <p className="page-lead">
+              코드를 몰라도 됩니다. 불편함을 말로 설명하고, 도구로 만들고, GitHub에 올리면 학교 도구가 됩니다.
+            </p>
+            <ol className="guide-path" aria-label="바이브코딩 순서">
+              <li>
+                <span>01</span>
+                이해하기
+              </li>
+              <li>
+                <span>02</span>
+                도구로 만들기
+              </li>
+              <li>
+                <span>03</span>
+                GitHub에 올리기
+              </li>
+            </ol>
           </div>
           <div className="guide-hero__panel">
-            <p className="guide-hero__label">시작하기</p>
+            <p className="guide-hero__label">이 페이지의 순서</p>
             <ul className="guide-nav">
               {guides.length ? (
                 guides.map((guide) => (

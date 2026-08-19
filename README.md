@@ -49,6 +49,8 @@ npm run dev
 
 프로그램 등록 SQL: `ecolab-next/supabase/programs-manage.sql`
 
+교직원 이름을 제작자 목록에 넣는 SQL: `ecolab-next/supabase/staff-maker.sql`
+
 ## 배포 (Vercel)
 
 인터넷 주소로 선생님들이 접속하려면 Vercel에 올립니다. 이 폴더가 GitHub 저장소의 루트이므로 **Root Directory는 비워 둡니다.** `.env.local`은 올리지 말고, 같은 이름/값은 Vercel 환경 변수에만 넣습니다. 채팅·GitHub에는 키를 붙이지 마세요.

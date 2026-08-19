@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { createBrowserSupabase } from "../lib/supabase-browser";
 
-export default function AuthButtons({ email, staffStatus, isAdmin }) {
+export default function AuthButtons({ email, name, staffStatus, isAdmin }) {
   async function signInWithGoogle() {
     const supabase = createBrowserSupabase();
     if (!supabase) return;
@@ -24,10 +24,11 @@ export default function AuthButtons({ email, staffStatus, isAdmin }) {
   }
 
   if (email) {
+    const label = name || email.split("@")[0] || "교직원";
     return (
       <div className="auth-status">
-        <span className="auth-status__email" title={email}>
-          {email}
+        <span className="auth-status__name" title={email}>
+          {label}
         </span>
         {isAdmin ? (
           <Link className="auth-button" href="/admin">

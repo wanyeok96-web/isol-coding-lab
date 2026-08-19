@@ -9,7 +9,7 @@ const NAV_ITEMS = [
   { key: "programs", href: "/", label: "프로그램" },
   { key: "makers", href: "/makers", label: "제작자" },
   { key: "ideas", href: "/ideas", label: "아이디어" },
-  { key: "guide", href: "/guide", label: "Vibe Guide" },
+  { key: "guide", href: "/guide", label: "바이브 가이드" },
 ];
 
 function getActiveKey(pathname) {
@@ -19,7 +19,7 @@ function getActiveKey(pathname) {
   return "programs";
 }
 
-export default function SiteHeader({ userEmail, staffStatus, isAdmin }) {
+export default function SiteHeader({ userEmail, userName, staffStatus, isAdmin }) {
   const pathname = usePathname();
   const activeKey = getActiveKey(pathname);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -63,7 +63,7 @@ export default function SiteHeader({ userEmail, staffStatus, isAdmin }) {
               {item.label}
             </Link>
           ))}
-          <AuthButtons email={userEmail} staffStatus={staffStatus} isAdmin={isAdmin} />
+          <AuthButtons email={userEmail} name={userName} staffStatus={staffStatus} isAdmin={isAdmin} />
         </nav>
       </div>
     </header>

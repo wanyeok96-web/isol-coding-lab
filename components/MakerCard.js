@@ -10,8 +10,10 @@ export default function MakerCard({ maker, programCount }) {
         </div>
         <div className="maker-card__body">
           <h3>{maker.name}</h3>
-          <p className="maker-card__subject">{maker.subject}</p>
-          <p className="maker-card__bio line-clamp-3">{maker.bio}</p>
+          <p className="maker-card__subject">{maker.subject || "이솔고등학교 교직원"}</p>
+          <p className="maker-card__bio line-clamp-3">
+            {maker.bio || "이솔고등학교에서 수업과 업무 도구를 만들고 있습니다."}
+          </p>
           <p className="maker-card__count">{programCount}개의 프로그램</p>
         </div>
       </Link>
