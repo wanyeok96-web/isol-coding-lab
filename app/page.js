@@ -1,69 +1,64 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import AuthBanner from "../components/AuthBanner";
+import HomeHero from "../components/HomeHero";
+import FeaturedPrograms from "../components/FeaturedPrograms";
+import ProgramExplorer from "../components/ProgramExplorer";
+import { getMakersById, getPublicPrograms } from "../lib/data";
+import { getLikeContext } from "../lib/likes";
 
-export default function Home() {
+export default async function Home({ searchParams }) {
+  const params = await searchParams;
+  const programs = await getPublicPrograms();
+  const featured = programs.filter((program) => program.featured).slice(0, 3);
+  const makersById = await getMakersById();
+  const { likeAccess, likedIds, userEmail, isAdmin } = await getLikeContext();
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.js</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main id="main">
+      <AuthBanner reason={params.auth} />
+      {params.notice === "submitted" ? (
+        <p className="auth-banner" role="status">
+          프로그램이 등록되었습니다. 목록에서 확인해 주세요.
+        </p>
+      ) : null}
+      {params.notice === "updated" ? (
+        <p className="auth-banner" role="status">
+          프로그램이 수정되었습니다.
+        </p>
+      ) : null}
+      {params.notice === "deleted" ? (
+        <p className="auth-banner" role="status">
+          프로그램이 삭제되었습니다.
+        </p>
+      ) : null}
+      <HomeHero likeAccess={likeAccess} />
+
+      <section className="intro" aria-labelledby="intro-title">
+        <div className="container">
+          <h2 id="intro-title" className="sr-only">
+            이코랩이 하는 일
+          </h2>
+          <div className="intro-grid">
+            <article className="intro-card">
+              <span className="intro-index">01</span>
+              <h3>발견하고</h3>
+              <p>학교 안에서 만들어진 유용한 도구를 찾아보세요.</p>
+            </article>
+            <article className="intro-card">
+              <span className="intro-index">02</span>
+              <h3>활용하고</h3>
+              <p>필요한 프로그램을 자신의 수업과 업무에 활용하세요.</p>
+            </article>
+            <article className="intro-card">
+              <span className="intro-index">03</span>
+              <h3>함께 발전시키고</h3>
+              <p>사용 후기와 아이디어를 나누며 더 좋은 도구로 발전시켜보세요.</p>
+            </article>
+          </div>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </section>
+
+      <FeaturedPrograms programs={featured} makersById={makersById} likeAccess={likeAccess} likedIds={likedIds} />
+      <ProgramExplorer programs={programs} makersById={makersById} likeAccess={likeAccess} likedIds={likedIds} />
+    </main>
   );
 }
