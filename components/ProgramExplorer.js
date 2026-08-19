@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CATEGORIES } from "@/lib/constants";
+import { CATEGORIES, getUnitLabel, getUnitOptions } from "@/lib/constants";
 import { getMakerNames } from "@/lib/format";
 import EmptyState from "./EmptyState";
 import ProgramCard from "./ProgramCard";
@@ -13,6 +13,7 @@ function matchesSearch(program, query, makersById) {
     program.title,
     program.subtitle,
     program.description,
+    program.unit,
     ...(program.tags || []),
     getMakerNames(program.makerIds, makersById),
   ]
@@ -25,11 +26,20 @@ function matchesSearch(program, query, makersById) {
 export default function ProgramExplorer({ programs, makersById, likeAccess = "guest", likedIds = [] }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("전체");
+  const [unit, setUnit] = useState("전체");
+  const unitOptions = getUnitOptions(category);
+  const unitLabel = getUnitLabel(category);
 
   const filtered = programs.filter((program) => {
     const matchesCategory = category === "전체" || program.category === category;
-    return matchesCategory && matchesSearch(program, query.trim().toLowerCase(), makersById);
+    const matchesUnit = unit === "전체" || program.unit === unit;
+    return matchesCategory && matchesUnit && matchesSearch(program, query.trim().toLowerCase(), makersById);
   });
+
+  function handleCategoryChange(nextCategory) {
+    setCategory(nextCategory);
+    setUnit("전체");
+  }
 
   return (
     <section className="explorer" id="programs" aria-labelledby="explorer-title">
@@ -66,12 +76,35 @@ export default function ProgramExplorer({ programs, makersById, likeAccess = "gu
                 type="button"
                 className={`filter-chip${category === item ? " is-active" : ""}`}
                 aria-pressed={category === item}
-                onClick={() => setCategory(item)}
+                onClick={() => handleCategoryChange(item)}
               >
                 {item}
               </button>
             ))}
           </div>
+          {unitOptions.length ? (
+            <div className="filters filters--units" role="group" aria-label={`${unitLabel} 필터`}>
+              <button
+                type="button"
+                className={`filter-chip${unit === "전체" ? " is-active" : ""}`}
+                aria-pressed={unit === "전체"}
+                onClick={() => setUnit("전체")}
+              >
+                {unitLabel} 전체
+              </button>
+              {unitOptions.map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  className={`filter-chip${unit === item ? " is-active" : ""}`}
+                  aria-pressed={unit === item}
+                  onClick={() => setUnit(item)}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+          ) : null}
         </div>
 
         <p className="result-count" aria-live="polite">

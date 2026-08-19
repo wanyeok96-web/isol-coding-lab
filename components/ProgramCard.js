@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CATEGORY_THEME } from "@/lib/constants";
 import { getMakerNames, hasOpenUrl } from "@/lib/format";
+import CategoryLabel from "./CategoryLabel";
 import LikeButton from "./LikeButton";
 import ProgramThumbnail from "./ProgramThumbnail";
 
@@ -20,9 +21,7 @@ export default function ProgramCard({ program, makersById, compact = false, like
           <ProgramThumbnail program={program} />
         </div>
         <div className="program-card__body">
-          <span className="category-chip" data-category={program.category}>
-            {program.category}
-          </span>
+          <CategoryLabel category={program.category} unit={program.unit} />
           <h3 className="line-clamp-2">{program.title}</h3>
           <p className="program-card__subtitle line-clamp-2">{program.subtitle || ""}</p>
           <ul className="tag-list">

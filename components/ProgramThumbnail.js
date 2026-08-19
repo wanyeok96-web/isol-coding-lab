@@ -12,7 +12,7 @@ export default function ProgramThumbnail({ program, large = false }) {
       <div className={`thumb-fallback${large ? " thumb-fallback--large" : ""}`}>
         <div className="thumb-fallback__mark">
           <span className="thumb-fallback__initials">{label}</span>
-          <span className="thumb-fallback__category">{program.category}</span>
+          <span className="thumb-fallback__category">{program.unit || program.category}</span>
         </div>
       </div>
     </>

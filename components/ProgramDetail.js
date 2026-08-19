@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CATEGORY_THEME } from "@/lib/constants";
 import { getVisibilityLabel } from "@/lib/format";
+import CategoryLabel from "./CategoryLabel";
 import CommentSection from "./CommentSection";
 import EmptyState from "./EmptyState";
 import MakerAvatar from "./MakerAvatar";
@@ -27,16 +28,14 @@ export default function ProgramDetail({
       <nav className="breadcrumb" aria-label="경로">
         <Link href="/#programs">프로그램</Link>
         <span>/</span>
-        <span>{program.category}</span>
+        <span>{program.unit ? `${program.category} · ${program.unit}` : program.category}</span>
         <span>/</span>
         <span>{program.title}</span>
       </nav>
 
       <section className="detail-hero">
         <div className="detail-hero__copy">
-          <span className="category-chip" data-category={program.category}>
-            {program.category}
-          </span>
+          <CategoryLabel category={program.category} unit={program.unit} />
           <h1>{program.title}</h1>
           <p className="detail-subtitle">{program.subtitle || ""}</p>
           <ul className="tag-list tag-list--detail">

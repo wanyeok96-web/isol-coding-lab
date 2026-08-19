@@ -1,34 +1,9 @@
--- ISOL CODING LAB · STEP 19
--- 교직원이 프로그램을 등록·수정하고, 관리자는 삭제할 수 있습니다.
+-- ISOL CODING LAB
+-- 프로그램에 부서·학년부·교과를 저장합니다.
 -- SQL Editor에 붙여넣고 Run 하세요.
 
 alter table public.programs
-  add column if not exists owner_email text not null default '';
-
-alter table public.programs
   add column if not exists unit text not null default '';
-
-alter table public.makers
-  add column if not exists email text not null default '';
-
-create unique index if not exists makers_email_unique
-  on public.makers (lower(email))
-  where email <> '';
-
-create or replace function public.is_approved_staff()
-returns boolean
-language sql
-stable
-security definer
-set search_path = public
-as $$
-  select exists (
-    select 1
-    from public.staff_members
-    where lower(email) = lower(coalesce(auth.jwt() ->> 'email', ''))
-      and status = 'approved'
-  );
-$$;
 
 create or replace function public.is_valid_program_unit(program_category text, program_unit text)
 returns boolean
@@ -331,48 +306,5 @@ begin
 end;
 $$;
 
-create or replace function public.delete_program(target_program_id text)
-returns jsonb
-language plpgsql
-security definer
-set search_path = public
-as $$
-declare
-  user_email text;
-  deleted_count integer;
-begin
-  user_email := lower(trim(coalesce(auth.jwt() ->> 'email', '')));
-  if user_email = '' then
-    return jsonb_build_object('ok', false, 'reason', 'login');
-  end if;
-
-  if not public.is_approved_staff() then
-    return jsonb_build_object('ok', false, 'reason', 'staff');
-  end if;
-
-  delete from public.programs
-  where id = target_program_id
-    and (
-      (owner_email <> '' and lower(owner_email) = user_email)
-      or exists (
-        select 1
-        from public.staff_members
-        where lower(email) = user_email
-          and role = 'admin'
-          and status = 'approved'
-      )
-    );
-
-  get diagnostics deleted_count = row_count;
-  if deleted_count = 0 then
-    return jsonb_build_object('ok', false, 'reason', 'forbidden');
-  end if;
-
-  return jsonb_build_object('ok', true);
-end;
-$$;
-
-grant execute on function public.is_approved_staff() to authenticated;
 grant execute on function public.add_program(text, text, text, text, text, text, text[], text[], text, text, text, text, text) to authenticated;
 grant execute on function public.update_program(text, text, text, text, text, text, text, text[], text[], text, text, text, text, text) to authenticated;
-grant execute on function public.delete_program(text) to authenticated;

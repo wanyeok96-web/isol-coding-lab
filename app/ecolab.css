@@ -1024,6 +1024,31 @@ p {
   font-weight: 700;
 }
 
+.category-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.category-meta .category-chip,
+.category-meta .unit-chip {
+  margin-bottom: 0;
+}
+
+.unit-chip {
+  display: inline-flex;
+  width: fit-content;
+  padding: 2px 8px;
+  border: 1px solid currentColor;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
 .category-chip[data-category="담임업무"] {
   background: #e6f7fb;
   color: var(--color-homeroom);
@@ -1031,6 +1056,14 @@ p {
 
 .category-chip[data-category="교과업무"] {
   background: #eeedfb;
+  color: var(--color-subject);
+}
+
+.unit-chip[data-category="담임업무"] {
+  color: var(--color-homeroom);
+}
+
+.unit-chip[data-category="교과업무"] {
   color: var(--color-subject);
 }
 

@@ -151,6 +151,11 @@ select.join-form__input {
   -webkit-appearance: none;
 }
 
+select.join-form__input:disabled {
+  opacity: 0.62;
+  cursor: not-allowed;
+}
+
 .join-form .btn {
   justify-self: start;
   min-width: 140px;

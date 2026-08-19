@@ -19,6 +19,7 @@ create table if not exists public.programs (
   description text not null default '',
   background text not null default '',
   category text not null check (category in ('학교업무', '담임업무', '교과업무')),
+  unit text not null default '',
   tags text[] not null default '{}',
   tools text[] not null default '{}',
   thumbnail text not null default '',

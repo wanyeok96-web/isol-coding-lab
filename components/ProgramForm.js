@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { CATEGORIES } from "../lib/constants";
+import { CATEGORIES, getUnitLabel, getUnitOptions } from "../lib/constants";
 import { joinCommaList } from "../lib/format";
 import { addProgram, updateProgram } from "../lib/program-actions";
 
@@ -20,9 +20,20 @@ export default function ProgramForm({ program = null, maker = null, defaultMaker
   const router = useRouter();
   const [description, setDescription] = useState(program?.description || "");
   const [background, setBackground] = useState(program?.background || "");
+  const [category, setCategory] = useState(program?.category || "");
+  const [unit, setUnit] = useState(program?.unit || "");
   const [toast, setToast] = useState("");
   const [busy, setBusy] = useState(false);
   const isEdit = Boolean(program);
+  const unitOptions = getUnitOptions(category);
+  const unitLabel = getUnitLabel(category);
+
+  function handleCategoryChange(event) {
+    const nextCategory = event.target.value;
+    const nextOptions = getUnitOptions(nextCategory);
+    setCategory(nextCategory);
+    setUnit(nextOptions.includes(unit) ? unit : "");
+  }
 
   function showToast(message) {
     setToast(message);
@@ -86,14 +97,37 @@ export default function ProgramForm({ program = null, maker = null, defaultMaker
         className="join-form__input"
         name="category"
         required
-        defaultValue={program?.category || ""}
+        value={category}
+        onChange={handleCategoryChange}
       >
         <option value="" disabled>
           카테고리를 선택하세요
         </option>
-        {PROGRAM_CATEGORIES.map((category) => (
-          <option key={category} value={category}>
-            {category}
+        {PROGRAM_CATEGORIES.map((item) => (
+          <option key={item} value={item}>
+            {item}
+          </option>
+        ))}
+      </select>
+
+      <label className="join-form__label" htmlFor="program-unit">
+        {unitLabel}
+      </label>
+      <select
+        id="program-unit"
+        className="join-form__input"
+        name="unit"
+        required
+        disabled={!category}
+        value={unit}
+        onChange={(event) => setUnit(event.target.value)}
+      >
+        <option value="" disabled>
+          {category ? `${unitLabel}를 선택하세요` : "카테고리를 먼저 선택하세요"}
+        </option>
+        {unitOptions.map((item) => (
+          <option key={item} value={item}>
+            {item}
           </option>
         ))}
       </select>
