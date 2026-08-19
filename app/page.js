@@ -40,8 +40,8 @@ export default async function Home({ searchParams }) {
           <div className="intro-grid">
             <article className="intro-card">
               <span className="intro-index">01</span>
-              <h3>발견하고</h3>
-              <p>학교 안에서 만들어진 유용한 도구를 찾아보세요.</p>
+              <h3>개발하고</h3>
+              <p>선생님이 필요한 도구를 개발해 보세요.</p>
             </article>
             <article className="intro-card">
               <span className="intro-index">02</span>
