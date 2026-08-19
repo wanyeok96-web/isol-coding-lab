@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getMakerNames, hasOpenUrl } from "@/lib/format";
+import { getMakerNames } from "@/lib/format";
 import CategoryLabel from "./CategoryLabel";
 import LikeButton from "./LikeButton";
 
@@ -28,11 +28,6 @@ export default function ProgramCard({ program, makersById, compact = false, like
         <p className="maker-names">{makerNames}</p>
         <div className="card-actions">
           <LikeButton programId={program.id} likes={likes} liked={liked} likeAccess={likeAccess} />
-          {hasOpenUrl(program.url) ? (
-            <a className="open-link" href={program.url} target="_blank" rel="noopener noreferrer">
-              실행
-            </a>
-          ) : null}
         </div>
       </div>
     </article>
