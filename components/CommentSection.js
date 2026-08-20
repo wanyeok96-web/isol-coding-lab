@@ -14,9 +14,15 @@ const MESSAGES = {
   error: "저장하지 못했습니다. 잠시 후 다시 시도해 주세요.",
 };
 
-function authorLabel(email) {
-  const local = String(email || "").split("@")[0];
-  return local || "교직원";
+function authorLabel(comment) {
+  const name = String(comment?.author_name || "").trim();
+  const email = String(comment?.email || "");
+  const loginId = email.split("@")[0];
+  if (!name) return "교직원";
+  if (name.toLowerCase() === loginId.toLowerCase() && !/[가-힣]/.test(name)) {
+    return "교직원";
+  }
+  return name;
 }
 
 export default function CommentSection({
@@ -66,6 +72,7 @@ export default function CommentSection({
           id: added.id,
           program_id: added.program_id,
           email: added.email,
+          author_name: added.author_name || "",
           body: added.body,
           created_at: added.created_at,
         },
@@ -102,7 +109,7 @@ export default function CommentSection({
             return (
               <li className="comment-item" key={comment.id}>
                 <div className="comment-item__meta">
-                  <strong>{authorLabel(comment.email)}</strong>
+                  <strong>{authorLabel(comment)}</strong>
                   <time dateTime={comment.created_at}>{formatDateTime(comment.created_at)}</time>
                   {canDelete ? (
                     <button

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { CATEGORY_THEME } from "@/lib/constants";
 import { getVisibilityLabel } from "@/lib/format";
 import CategoryLabel from "./CategoryLabel";
 import CommentSection from "./CommentSection";
@@ -8,7 +7,6 @@ import MakerAvatar from "./MakerAvatar";
 import ProgramActions from "./ProgramActions";
 import ProgramCard from "./ProgramCard";
 import ProgramManageButtons from "./ProgramManageButtons";
-import ProgramThumbnail from "./ProgramThumbnail";
 
 export default function ProgramDetail({
   program,
@@ -21,8 +19,6 @@ export default function ProgramDetail({
   userEmail = null,
   isAdmin = false,
 }) {
-  const theme = CATEGORY_THEME[program.category] || CATEGORY_THEME["학교업무"];
-
   return (
     <div className="detail-root">
       <nav className="breadcrumb" aria-label="경로">
@@ -64,11 +60,6 @@ export default function ProgramDetail({
               isAdmin
             }
           />
-        </div>
-        <div className="detail-hero__visual">
-          <div className="detail-thumb" style={{ "--thumb-from": theme.from, "--thumb-to": theme.to }}>
-            <ProgramThumbnail program={program} large />
-          </div>
         </div>
       </section>
 

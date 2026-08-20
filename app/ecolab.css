@@ -1241,10 +1241,17 @@ p {
   color: var(--color-text);
 }
 
-.detail-hero,
+.detail-hero {
+  display: block;
+}
+
+.detail-hero__copy {
+  max-width: 720px;
+}
+
 .maker-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  grid-template-columns: auto minmax(0, 1fr);
   gap: 24px;
   align-items: center;
 }
@@ -1307,18 +1314,6 @@ p {
 
 .state-action {
   margin-top: 18px;
-}
-
-.detail-thumb {
-  min-height: 300px;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: linear-gradient(180deg, var(--thumb-from, #5ac8fa), var(--thumb-to, #007aff));
-  box-shadow: var(--shadow-md);
-}
-
-.detail-thumb .thumb-fallback {
-  min-height: 300px;
 }
 
 .thumb-fallback--large .thumb-fallback__initials {
@@ -2112,7 +2107,6 @@ p {
   .program-grid,
   .makers-grid,
   .ideas-grid,
-  .detail-hero,
   .maker-hero,
   .detail-grid {
     grid-template-columns: 1fr 1fr;
@@ -2243,7 +2237,6 @@ p {
   }
 
   .page-hero__stack,
-  .detail-hero,
   .maker-hero,
   .detail-grid,
   .guide-card,

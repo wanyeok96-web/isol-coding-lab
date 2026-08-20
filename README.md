@@ -43,6 +43,8 @@ npm run dev
 
 댓글 SQL: `ecolab-next/supabase/comments.sql`
 
+후기 작성자 이름 SQL: `ecolab-next/supabase/comment-author-name.sql`
+
 아이디어 SQL: `ecolab-next/supabase/ideas.sql`
 
 아이디어 수정·삭제 SQL: `ecolab-next/supabase/ideas-manage.sql`

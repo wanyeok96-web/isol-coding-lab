@@ -58,7 +58,15 @@ begin
     );
   else
     update public.makers
-    set name = cleaned_name,
+    set name = case
+      when trim(coalesce(name, '')) = '' then cleaned_name
+      when lower(trim(name)) = split_part(user_email, '@', 1)
+        and cleaned_name <> ''
+        and lower(cleaned_name) is distinct from split_part(user_email, '@', 1)
+        then cleaned_name
+      when name !~ '[가-힣]' and cleaned_name ~ '[가-힣]' then cleaned_name
+      else name
+    end,
         profile_image = case when cleaned_avatar = '' then profile_image else cleaned_avatar end
     where id = maker_id;
   end if;
